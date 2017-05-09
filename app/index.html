@@ -1,12 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/style.css" rel="stylesheet">
-    </head>
-    <body>
-    
-    </body>
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="node_modules/vue/dist/vue.min.js"></script>
+    <script src="node_modules/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <ol>
+            <li v-for='product in message'>Product Name: {{product.name}}</li>
+        </ol>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!'
+            },
+            created:function() {
+                axios.get(`http://localhost:8888/products`)
+                    .then(response => {
+                        this.message=response.data
+                    })
+                    .catch(e => {
+                        console.log(e);
+                        this.errors.push(e);                        
+                    })
+            }
+        })
+    </script>
+</body>
+
 </html>
